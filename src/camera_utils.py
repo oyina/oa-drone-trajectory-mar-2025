@@ -38,8 +38,6 @@ def project_world_point_to_image(camera: Camera, point: np.ndarray) -> np.ndarra
     x_2d = x_3d / z_3d
     y_2d = y_3d / z_3d
 
-    #u = (camera.fx * x_2d) + camera.cx
-    #v = (camera.fy * y_2d) + camera.cy
     u = camera.fx * x_2d + camera.cx
     v = camera.fy * y_2d + camera.cy
     return np.array([u, v])
