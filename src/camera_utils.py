@@ -71,4 +71,4 @@ def compute_ground_sampling_distance(camera: Camera, distance_from_surface: floa
         float: the GSD in meters (smaller among x and y directions).
     """
     focal_length_max = max(camera.fx, camera.fy)
-    return ((distance_from_surface) / focal_length_max)  
+    return distance_from_surface / focal_length_max  
