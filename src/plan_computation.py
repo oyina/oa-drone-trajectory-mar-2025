@@ -19,8 +19,9 @@ def compute_distance_between_images(camera: Camera, dataset_spec: DatasetSpec) -
         float: The distance between images in the horizontal direction.
         float: The distance between images in the vertical direction.
     """
-    vertical_overlap = (1 - dataset_spec.overlap) * compute_image_footprint_on_surface(camera, dataset_spec.height)[1]
-    horizontal_overlap = (1 - dataset_spec.sidelap) * compute_image_footprint_on_surface(camera, dataset_spec.height)[0]
+    [footprint_x, footprint_y] = compute_image_footprint_on_surface(camera, dataset_spec.height)
+    vertical_overlap = (1 - dataset_spec.sidelap) * footprint_y
+    horizontal_overlap = (1 - dataset_spec.overlap) * footprint_x
     return np.array([horizontal_overlap, vertical_overlap])
 
 
