@@ -57,21 +57,13 @@ def generate_photo_plan_on_grid(camera: Camera, dataset_spec: DatasetSpec) -> T.
 
     max_distance = compute_distance_between_images(camera, dataset_spec)
     speed = compute_speed_during_photo_capture(camera, dataset_spec)
-    footprint = compute_image_footprint_on_surface(camera, dataset_spec.height)
-    print(f"Footprint: {footprint}")
-
-    images_x_axis_unrounded = dataset_spec.scan_dimension_x / max_distance[0]
-    images_y_axis_unrounded = dataset_spec.scan_dimension_y / max_distance[1]
-    print(f"Images in x axis unrounded: {images_x_axis_unrounded}, Images in y axis unrounded: {images_y_axis_unrounded}")
-    
+   
     images_x_axis = math.ceil(dataset_spec.scan_dimension_x / max_distance[0])
     images_y_axis = math.ceil(dataset_spec.scan_dimension_y  / max_distance[1])
 
-    print(f"Images in x axis: {images_x_axis}, Images in y axis: {images_y_axis}")
-
     x_increment = dataset_spec.scan_dimension_x / images_x_axis
     y_increment = dataset_spec.scan_dimension_y / images_y_axis
-    print(f"x increment: {x_increment}, y increment: {y_increment}")
+
 
     for i in range(images_y_axis):
 
@@ -82,15 +74,11 @@ def generate_photo_plan_on_grid(camera: Camera, dataset_spec: DatasetSpec) -> T.
                 s = speed
                 plan.append(Waypoint(x,y,speed))
         else:  # If the outer loop iteration is odd, count backwards
-            for j in range(images_x_axis, 0, -1):
+            for j in range(images_x_axis, -1, -1):
                 x = 0 + (x_increment*j)
                 y = 0 + (y_increment*i)
                 s = speed
                 plan.append(Waypoint(x,y,speed))
-        
-
-    
-    
 
     return plan
 
