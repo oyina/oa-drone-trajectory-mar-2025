@@ -46,5 +46,12 @@ class DatasetSpec:
 class Waypoint:
     """
     Waypoints are positions where the drone should fly to and capture a photo.
+
+    Args:
+        x: (float) X coordinate of the waypoint
+        y: (float) Y coordinate of the waypoint
+        speeed: (float) Speed of the drone at the waypoint
     """
-    pass
+    x: float
+    y: float
+    speed: float
