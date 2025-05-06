@@ -66,19 +66,11 @@ def generate_photo_plan_on_grid(camera: Camera, dataset_spec: DatasetSpec) -> T.
 
 
     for i in range(images_y_axis):
-
+        y = y_increment*i
         if i % 2 == 0:  # If the outer loop iteration is even, count forwards   
             for j in range(images_x_axis+1):
-                x = 0 + (x_increment*j)
-                y = 0 + (y_increment*i)
-                s = speed
-                plan.append(Waypoint(x,y,speed))
+                plan.append(Waypoint(x_increment*j,y,speed))
         else:  # If the outer loop iteration is odd, count backwards
             for j in range(images_x_axis, -1, -1):
-                x = 0 + (x_increment*j)
-                y = 0 + (y_increment*i)
-                s = speed
-                plan.append(Waypoint(x,y,speed))
-
+                plan.append(Waypoint(x_increment*j,y,speed))
     return plan
-
