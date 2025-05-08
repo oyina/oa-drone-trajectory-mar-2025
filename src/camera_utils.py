@@ -25,7 +25,7 @@ def project_world_point_to_image(camera: Camera, point: np.ndarray) -> np.ndarra
 
     Args:
         camera (Camera): the camera model
-        point (np.ndarray): the 3D world point [x, y, z] in meters.
+        point (np.ndarray): the 3D world point [x, y, z]
 
     Returns:
         np.ndarray: [u, v] pixel coordinates corresponding to the point.

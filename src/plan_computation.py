@@ -36,7 +36,10 @@ def compute_speed_during_photo_capture(camera: Camera, dataset_spec: DatasetSpec
     Returns:
         float: The speed at which the drone should move during photo capture.
     """
-    raise NotImplementedError()
+    distance = compute_ground_sampling_distance(camera, dataset_spec.height) * allowed_movement_px
+    #the exposure time is given in milliseconds, so we need to convert it to seconds
+    time = dataset_spec.exposure_time_ms / 1000
+    return distance / time
 
 
 def generate_photo_plan_on_grid(camera: Camera, dataset_spec: DatasetSpec) -> T.List[Waypoint]:
@@ -50,4 +53,25 @@ def generate_photo_plan_on_grid(camera: Camera, dataset_spec: DatasetSpec) -> T.
         List[Waypoint]: scan plan as a list of waypoints.
 
     """
-    raise NotImplementedError()
+    plan = []
+
+    max_distance = compute_distance_between_images(camera, dataset_spec)
+    speed = compute_speed_during_photo_capture(camera, dataset_spec)
+   
+    images_x_axis = math.ceil(dataset_spec.scan_dimension_x / max_distance[0])
+    images_y_axis = math.ceil(dataset_spec.scan_dimension_y  / max_distance[1])
+
+    x_increment = dataset_spec.scan_dimension_x / images_x_axis
+    y_increment = dataset_spec.scan_dimension_y / images_y_axis
+
+
+    for i in range(images_y_axis +1):
+        y = y_increment*i
+        #y = (compute_image_footprint_on_surface(camera, dataset_spec.height)[1]/2) + y_increment*i
+        if i % 2 == 0:  # If the outer loop iteration is even, count forwards   
+            for j in range(images_x_axis+1):
+                plan.append(Waypoint(x_increment*j,y,speed))
+        else:  # If the outer loop iteration is odd, count backwards
+            for j in range(images_x_axis, -1, -1):
+                plan.append(Waypoint(x_increment*j,y,speed))
+    return plan
