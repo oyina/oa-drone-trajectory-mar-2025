@@ -65,8 +65,9 @@ def generate_photo_plan_on_grid(camera: Camera, dataset_spec: DatasetSpec) -> T.
     y_increment = dataset_spec.scan_dimension_y / images_y_axis
 
 
-    for i in range(images_y_axis):
+    for i in range(images_y_axis +1):
         y = y_increment*i
+        #y = (compute_image_footprint_on_surface(camera, dataset_spec.height)[1]/2) + y_increment*i
         if i % 2 == 0:  # If the outer loop iteration is even, count forwards   
             for j in range(images_x_axis+1):
                 plan.append(Waypoint(x_increment*j,y,speed))
