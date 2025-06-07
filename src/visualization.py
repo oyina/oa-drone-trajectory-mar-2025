@@ -23,7 +23,7 @@ def plot_photo_plan(photo_plans: T.List[Waypoint]) -> go.Figure:
     for plan in photo_plans:
         x_vals.append(plan.x)
         y_vals.append(plan.y)
-        speed_vals.append(plan.speed)
+        speed_vals.append(round(plan.speed, 3))
 
     # Creating trace1
     trace1 = go.Scatter(
@@ -61,7 +61,7 @@ def plot_photo_plan(photo_plans: T.List[Waypoint]) -> go.Figure:
         xaxis=dict(range=[x_vals[0], x_vals[-1]], autorange=True, zeroline=False),
         yaxis=dict(range=[y_vals[0], y_vals[-1]], autorange=True, zeroline=False),
         margin=dict(l=50, r=50, t=50, b=50),
-        title_text="Drone Flight Plan",
+        title_text="Drone Flight Plan at {0:.3f} m/s".format(speed_vals[0]),
         title_x=0.5,
         updatemenus=[
             dict(
