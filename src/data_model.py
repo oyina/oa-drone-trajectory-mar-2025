@@ -26,12 +26,12 @@ class DatasetSpec:
     Data model for specifications of an image dataset.
 
     Args:
-        overlap (float)
-        sidelap (float)
-        height (float)
-        scan_dimension_x (int) 
-        scan_dimension_y (int)
-        exposure_time_ms (int)
+        overlap: (float) Ratio (0 to 1) of scene shared between two consecutive images
+        sidelap: (float)  Ratio (0 to 1) of scene shared between two images in adjacent rows
+        height: (float)  Height of the scan above the ground (in meters)
+        scan_dimension_x: (int)  Horizontal size of the rectangle to be scanned (in meters)
+        scan_dimension_y: (int)  Vertical size of the rectangle to be scanned (in meters)
+        exposure_time_ms: (int)  Exposure time for each image (in milliseconds)
     """
     overlap: float
     sidelap: float
@@ -46,5 +46,12 @@ class DatasetSpec:
 class Waypoint:
     """
     Waypoints are positions where the drone should fly to and capture a photo.
+
+    Args:
+        x: (float) X coordinate of the waypoint
+        y: (float) Y coordinate of the waypoint
+        speeed: (float) Speed of the drone at the waypoint
     """
-    pass
+    x: float
+    y: float
+    speed: float
